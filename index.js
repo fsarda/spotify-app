@@ -1,8 +1,4 @@
-import { initProfile } from './libs/dom.js';
-import { logout } from './libs/authentication.js';
+import { initProfile , initLogout } from './libs/dom.js';
 
 initProfile();
-
-window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById("logout").addEventListener('click', logout);
-});
+initLogout();

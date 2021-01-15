@@ -12,7 +12,3 @@ export const getLoginUrl = () =>
 	'&response_type=token';
 
 
-export function logout() {
-	localStorage.removeItem('accesToken');
-	window.location.reload();
-}

@@ -1,5 +1,5 @@
 import { getLoginUrl } from './authentication.js';
-import { getUserPlayLists, getUserData } from './user.js';
+import { getUserPlayLists, getUserData, getUserToptracks } from './user.js';
 
 const addLoginUrlHREF = () => {
 	const loginButton = document.getElementById('btn-login');
@@ -70,6 +70,7 @@ const setUserPlaylists = async (access_token) => {
 	const resultsPlaceholder = document.getElementById('result');
 
 	const { items } = await getUserPlayLists(access_token);
+
 	resultsPlaceholder.innerHTML += '<div id="userPlaylists"><ul>';
 
 	items.forEach(({ name, href }) => {
@@ -82,6 +83,13 @@ const setUserPlaylists = async (access_token) => {
 
 	resultsPlaceholder.innerHTML += '</ul></div>';
 };
+
+
+const setUserTopTracks = async (access_token) => {
+	const resultPlaceholder = document.querySelector('.top');
+	const result = await getUserToptracks(access_token);
+	console.log(result) 
+}
 
 export const initProfile = () => {
 	window.addEventListener('DOMContentLoaded', async (event) => {
@@ -106,9 +114,23 @@ export const initLogin = () => {
 	});
 };
 
-/*export const intilogout = () => {
-	document.querySelector('#logout').addEventListener('click', () => {
-		localStorage.removeItem('accesToken');
-		window.location.reload();
-	});
-};*/
+export const iniTopTracks = () => {
+	window.addEventListener('DOMContentLoaded', () => {
+		const { access_token } = getLoginInfo();
+		if(access_token) {
+			setUserTopTracks(access_token)
+		} else {
+			window.location.href = 'login.html';
+		}
+	})
+}
+
+export function logout() {
+	localStorage.removeItem('accesToken');
+	window.location.reload();
+}
+
+export const initLogout = () => {
+	document.querySelector('#logout').addEventListener('click', logout);
+};
+
